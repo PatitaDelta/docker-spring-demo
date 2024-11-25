@@ -1,0 +1,41 @@
+services:
+
+  spring-demo:
+    image: guillermolillo/spring-demo:17.0.13
+    container_name: spring-demo-container
+    ports:
+      - 8080:8080
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NAME: guillermoll
+        EMAIL: guillermo.jobs@hotmail.com
+    networks:
+      - spring-network
+    volumes:
+      - ssh_keys_volume:/root/.ssh
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql_database
+    environment:
+      MYSQL_ROOT_PASSWORD: 0987
+      MYSQL_DATABASE: springDemoDB
+      MYSQL_USER: guillermoll
+      MYSQL_PASSWORD: 1234
+    ports:
+      - 3307:3306
+    networks:
+      - spring-network
+    volumes:
+      - mysql_volume:/var/lib/mysql
+
+networks:
+  spring-network:
+volumes:
+  mysql_volume:
+  ssh_keys_volume:
+    external: true

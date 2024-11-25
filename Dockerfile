@@ -61,8 +61,10 @@ RUN mkdir /root/.ssh
 #############################################################
 
 # Lanzar app
-# Production: 
+
+# Production 
 # ENTRYPOINT [ "java", "-jar", "./target/docker-demo-0.0.1-SNAPSHOT.jar"]
 
-# Develop NOTRUN
-ENTRYPOINT [ "tail", "-f", "./logs/errors.log"]
+# Develop
+# ENTRYPOINT [ "tail", "-F", "./logs/errors.log"]
+ENTRYPOINT [ "./mvnw", "spring-boot:run"]

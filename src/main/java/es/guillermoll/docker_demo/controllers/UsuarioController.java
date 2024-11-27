@@ -21,7 +21,7 @@ import es.guillermoll.docker_demo.services.UsuarioService;
 public class UsuarioController {
 
     @Autowired
-    UsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @GetMapping()
     public ArrayList<UsuarioModel> getUsers() {

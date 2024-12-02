@@ -42,23 +42,47 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    public void testSetUser() {
-        UsuarioModel userWanted = new UsuarioModel(1L, "test", "test@test.com", 1);
+    public void testPostUser() {
+        UsuarioModel userPosted = new UsuarioModel("test", "test@test.com", 1);
+        UsuarioModel userRecibed = new UsuarioModel(5L, "test", "test@test.com", 1);
 
-        // Cuando se llame a setUser en el servico pasar el usuario simulado
-        Mockito.when(usuarioService.setUser(Mockito.any())).thenReturn(userWanted);
+        // Cuando se llame a setUser en el servicio recibir el usuario simulado
+        Mockito.when(usuarioRepository.save(userPosted)).thenReturn(userRecibed);
 
-        final UsuarioModel userOutput = usuarioRepository.save(userWanted);
+        // Probamos la funcion programada
+        final UsuarioModel userOutput = usuarioService.setUser(userPosted);
 
-        // Comprobacion el usuario que se a creado en BD
-        Assertions.assertEquals(userWanted.getId(), userOutput.getId());
-        Assertions.assertEquals(userWanted.getNombre(), userOutput.getNombre());
-        Assertions.assertEquals(userWanted.getPrioridad(), userOutput.getPrioridad());
-        Assertions.assertEquals(userWanted.getPrioridad(), userOutput.getPrioridad());
+        // Comprobacion del usuario que se a creado en BD
+        Assertions.assertEquals(userRecibed.getId(), userOutput.getId());
+        Assertions.assertEquals(userRecibed.getNombre(), userOutput.getNombre());
+        Assertions.assertEquals(userRecibed.getEmail(), userOutput.getEmail());
+        Assertions.assertEquals(userRecibed.getPrioridad(), userOutput.getPrioridad());
 
         // Numero de veces que se llama a la funcion de inserccion en el
         // servicio(UsuarioService)
-        Mockito.verify(usuarioRepository).save(Mockito.any());
+        Mockito.verify(usuarioRepository).save(userPosted);
+    }
+
+    @Test
+    public void testPutUser() {
+        UsuarioModel userPuted = new UsuarioModel(5L, "test2", "test2@test.es", 3);
+        UsuarioModel userRecibed = new UsuarioModel(5L, "test2", "test2@test.es", 3);
+
+        // Cuando se llame a setUser en el servicio recibir el usuario simulado
+        Mockito.when(usuarioRepository.save(userPuted)).thenReturn(userRecibed);
+
+        // Probamos la funcion programada
+        final UsuarioModel userOutput = usuarioService.setUser(userPuted);
+
+        // Comprobacion del usuario que se a modificado en BD
+        Assertions.assertEquals(userRecibed.getId(), userOutput.getId());
+        Assertions.assertEquals(userRecibed.getNombre(), userOutput.getNombre());
+        Assertions.assertEquals(userRecibed.getPrioridad(), userOutput.getPrioridad());
+        Assertions.assertEquals(userRecibed.getPrioridad(), userOutput.getPrioridad());
+
+        // Numero de veces que se llama a la funcion de inserccion en el
+        // servicio(UsuarioService)
+        Mockito.verify(usuarioRepository).save(userPuted);
     }
 
 }

@@ -18,6 +18,12 @@ public class UsuarioModel {
     public UsuarioModel() {
     }
 
+    public UsuarioModel(String nombre, String email, Integer prioridad) {
+        this.nombre = nombre;
+        this.email = email;
+        this.prioridad = prioridad;
+    }
+
     public UsuarioModel(Long id, String nombre, String email, Integer prioridad) {
         this.id = id;
         this.nombre = nombre;
